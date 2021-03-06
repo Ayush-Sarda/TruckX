@@ -53,7 +53,7 @@ public class AdminService {
     }
 
     public CommandRes sendCommand(SendCommand command) {
-        String url = baseUrl + command.getImei();
+        String url = baseUrl + "/" + command.getImei();
         try {
             ResponseEntity<CommandRes> responseEntity = restTemplate.exchange(
                     UriComponentsBuilder.fromHttpUrl(url).toUriString(),
