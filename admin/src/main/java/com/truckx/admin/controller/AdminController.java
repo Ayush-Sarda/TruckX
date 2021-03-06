@@ -46,8 +46,12 @@ public class AdminController {
 
     @PostMapping("/admin/command")
     public ResponseEntity<GenericResponse> sendCommandToDashCam(@RequestBody SendCommand sendCommand) {
-        CommandRes commandRes = adminService.sendCommand(sendCommand);
-        String message = Objects.isNull(commandRes) ? "Not found any data" : "Success";
-        return new ResponseEntity<>(new GenericResponse(true, message, ""), HttpStatus.OK);
+        try {
+            CommandRes commandRes = adminService.sendCommand(sendCommand);
+            String message = Objects.isNull(commandRes) ? "Not found any data" : "Success";
+            return new ResponseEntity<>(new GenericResponse(true, message, ""), HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(new GenericResponse(true, "Command not sent", null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
